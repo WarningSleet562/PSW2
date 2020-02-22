@@ -1,4 +1,4 @@
-package br.edu.udc.VetorFiguras;
+package br.edu.udc.listaFiguras;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -15,9 +15,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import br.edu.udc7_1.Ponto2D;
+import Colecao.ListaEncadeada;
+import br.edu.udc.geometria.Ponto2D;
 
-public class VetorFiguras extends JFrame{
+public class ListaFiguras extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	private Painel mousePanel;
@@ -65,7 +66,7 @@ public class VetorFiguras extends JFrame{
 	
 	/* Construtor */
 	
-	public VetorFiguras() {
+	public ListaFiguras() {
 		super("Vetor de figuras");
 		
 		setSize(750, 750);
@@ -73,8 +74,7 @@ public class VetorFiguras extends JFrame{
 		
 		setLayout(new BorderLayout());
 		
-		message = "";
-		
+		message = "";		
 		
 		/* Mensagens de Rodapé */
 		
@@ -86,7 +86,7 @@ public class VetorFiguras extends JFrame{
 		
 		mousePanel = new Painel();
 		add(mousePanel, BorderLayout.CENTER);
-		mousePanel.startArray();
+		mousePanel.startLista();
 		
 		mousePanel.addMouseListener(new MouseListener(){
 
@@ -174,17 +174,7 @@ public class VetorFiguras extends JFrame{
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				/*if (mousePanel.getOpcao() == 1 || mousePanel.getOpcao() == 2 ||  mousePanel.getOpcao() == 4 || mousePanel.getOpcao() == 5){
-					mousePanel.setOriginX(originX);
-					mousePanel.setOriginY(originY);
-					mousePanel.setRadiusX(radiusX);
-					mousePanel.setRadiusY(radiusY);
-					mousePanel.setRadius((int) Math.abs(r));
-					
-					mousePanel.repaint();	
-				}
-				*/								
-				mousePanel.repaint();
+				
 			}
 			
 			
@@ -212,8 +202,7 @@ public class VetorFiguras extends JFrame{
 					mousePanel.setRadiusY(radiusY);
 					mousePanel.setRadius((int) Math.abs(r));
 					
-					//mousePanel.repaint();
-					
+					mousePanel.repaint();					
 										
 					message = origin + " - " + String.format("Raio: [%d; %d][%.2f]", radiusX, radiusY, r)  + " - " + 
 							String.format("Area: [%.2f]", area) + " - " + String.format("Circunferencia: [%.2f]", circ);
@@ -291,8 +280,7 @@ public class VetorFiguras extends JFrame{
 
 			@Override
 			public void mouseMoved(MouseEvent arg0) {
-				String moved = String.format("Mouse na posição [%d; %d]", arg0.getX(), arg0.getY()) + " - " + 
-								String.format("Figuras: %d", mousePanel.getNumFig());
+				String moved = String.format("Mouse na posição [%d; %d]", arg0.getX(), arg0.getY());
 				
 				if (message.length() > 1)
 					moved = moved + " - " + message;
@@ -406,21 +394,17 @@ class Painel extends JPanel {
 	private int pontoAX, pontoAY, pontoBX, pontoBY, pontoCX, pontoCY;
 	private int opcao;
 	
-	private Figura f[];
-	private int numFig;
+	private ListaEncadeada<Figura> f;
 	
 	/* Getters and Setters */
 	
-	public int getNumFig() {
-		return numFig;
-	}
-
-	public void setNumFig(int numFig) {
-		this.numFig = numFig;
-	}
 
 	public int getPontoAX() {
 		return pontoAX;
+	}
+
+	public void startLista() {
+		f = new ListaEncadeada<Figura>();		
 	}
 
 	public void setPontoAX(int pontoAX) {
@@ -536,81 +520,69 @@ class Painel extends JPanel {
 		this.radius = radius;
 	}
 	
-	public void startArray() {
-		f = new Figura[500];
-		numFig = 0;
-	}
 
 	/* Método paint */
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		
-		f[numFig] = new Figura();
+		f.inserir(new Figura(), 0);
 		
 		switch(opcao){
 			/* Círculo */
 			case 1:{
-				f[numFig].setTipo(1);
-				
 				int x = originX - radius;
 				int y = originY - radius;
 				
-				f[numFig].setOrigem(new Ponto2D(x, y));
-				f[numFig].setFim(new Ponto2D(radius*2, radius*2));
+				f.inserir(new Figura(new Ponto2D(x, y), new Ponto2D(radius*2, radius*2), 1), 500);
 				break;
 			}
 			/* Retângulo */
-			case 2:{
-				f[numFig].setTipo(2);
-				
+			case 2:{				
 				if (originX < radiusX){
 					if (originY < radiusY) {
-						f[numFig].setOrigem(new Ponto2D(originX, originY));
-						f[numFig].setFim(new Ponto2D(radiusX-originX, radiusY-originY));					
+						f.inserir(new Figura(new Ponto2D(originX, originY), 
+								new Ponto2D(radiusX-originX, radiusY-originY), 2), 500);					
 					}
 					
 					else {
-						f[numFig].setOrigem(new Ponto2D(originX, radiusY));
-						f[numFig].setFim(new Ponto2D(radiusX-originX, originY-radiusY));
+						f.inserir(new Figura(new Ponto2D(originX, radiusY), 
+								new Ponto2D(radiusX-originX, originY-radius), 2), 500);
 					}
 		
 				}
+				
 				else {
 					if (originY < radiusY) {
-						f[numFig].setOrigem(new Ponto2D(radiusX, originY));
-						f[numFig].setFim(new Ponto2D(originX-radiusX, radiusY-originY));
+						f.inserir(new Figura(new Ponto2D(radiusX, originY), 
+								new Ponto2D(originX-radiusX, radiusY-originY), 2), 500);
 					}
 					
 					else {
-						f[numFig].setOrigem(new Ponto2D(radiusX, radiusY));
-						f[numFig].setFim(new Ponto2D(originX-radiusX, originY-radiusY));
+						f.inserir(new Figura(new Ponto2D(radiusX, radiusY), 
+								new Ponto2D(originX-radiusX, originY-radiusY), 2), 500);
 					}
 				}
+				
 				break;
 			}
 			/* Ponto */
 			case 3:{
-				f[numFig].setTipo(3);
-				
-				f[numFig].setOrigem(new Ponto2D(pointX-1, pointY-1));
-				f[numFig].setFim(new Ponto2D(3, 3));
+				f.inserir(new Figura(new Ponto2D(pointX-1, pointY-1), 
+						new Ponto2D(3, 3), 3), 500);
 				
 				break;
 			}
 			/* Linha */
 			case 4:{
-				f[numFig].setTipo(4);
-				
-				f[numFig].setOrigem(new Ponto2D(originX, originY));
-				f[numFig].setFim(new Ponto2D(radiusX, radiusY));
+				f.inserir(new Figura(new Ponto2D(originX, originY), 
+						new Ponto2D(radiusX, radiusY), 4), 500);
 				
 				break;
 			}
 			/* Quadrado */
 			case 5:{
-				f[numFig].setTipo(2);
-				
+				/*				
 				if (originX < radiusX){
 					if (originY < radiusY) {
 						if (radiusX-originX > radiusY-originY) {
@@ -662,49 +634,42 @@ class Painel extends JPanel {
 						}
 					}
 				}
-			
+			*/
 				break;
 			}
 			/* Triangulo */
 			case 6:{
-				f[numFig].setTipo(4);
-				f[numFig].setOrigem(new Ponto2D(pontoAX, pontoAY));
-				f[numFig].setFim(new Ponto2D(pontoBX, pontoBY));
-				numFig++;
+				f.inserir(new Figura(new Ponto2D(pontoAX, pontoAY), 
+						new Ponto2D(pontoBX, pontoBY), 4), 500);
 				
-				f[numFig] = new Figura();
-				f[numFig].setTipo(4);
-				f[numFig].setOrigem(new Ponto2D(pontoBX, pontoBY));
-				f[numFig].setFim(new Ponto2D(pontoCX, pontoCY));
-				numFig++;
+				f.inserir(new Figura(new Ponto2D(pontoBX, pontoBY), 
+						new Ponto2D(pontoCX, pontoCY), 4), 500);
 				
-				f[numFig] = new Figura();
-				f[numFig].setTipo(4);
-				f[numFig].setOrigem(new Ponto2D(pontoCX, pontoCY));
-				f[numFig].setFim(new Ponto2D(pontoAX, pontoAY));
+				f.inserir(new Figura(new Ponto2D(pontoCX, pontoCY), 
+						new Ponto2D(pontoAX, pontoAY), 4), 500);
 				
 				break;
 			}
 		}
 		
-		numFig++;
-	
-		for(int i = 0; i < numFig; i++) {
+		for(Figura p:f) {
+			Figura i = p;
+			
 			/* 1 = Circulo */
-			if (f[i].getTipo() == 1)
-				g.drawOval(f[i].getOrigem().getX(), f[i].getOrigem().getY(), f[i].getFim().getX(), f[i].getFim().getY());
+			if (i.getTipo() == 1)
+				g.drawOval(i.getOrigem().getX(), i.getOrigem().getY(), i.getFim().getX(), i.getFim().getY());
 			
 			/* 2 = Retangulo */
-			else if (f[i].getTipo() == 2)
-				g.drawRect(f[i].getOrigem().getX(), f[i].getOrigem().getY(), f[i].getFim().getX(), f[i].getFim().getY());
+			else if (i.getTipo() == 2)
+				g.drawRect(i.getOrigem().getX(), i.getOrigem().getY(), i.getFim().getX(), i.getFim().getY());
 			
 			/* 3 = Ponto */
-			else if (f[i].getTipo() == 3)
-				g.fillOval(f[i].getOrigem().getX(), f[i].getOrigem().getY(), f[i].getFim().getX(), f[i].getFim().getY());
+			else if (i.getTipo() == 3)
+				g.fillOval(i.getOrigem().getX(), i.getOrigem().getY(), i.getFim().getX(), i.getFim().getY());
 			
 			/* 4 = Linha */
-			else if (f[i].getTipo() == 4)
-				g.drawLine(f[i].getOrigem().getX(), f[i].getOrigem().getY(), f[i].getFim().getX(), f[i].getFim().getY());
+			else if (i.getTipo() == 4)
+				g.drawLine(i.getOrigem().getX(), i.getOrigem().getY(), i.getFim().getX(), i.getFim().getY());
 			
 			/* 0 = Vazio */
 			else
@@ -751,5 +716,11 @@ class Figura {
 		origem = new Ponto2D();
 		fim = new Ponto2D();
 		tipo = 0;		
+	}
+	
+	Figura(Ponto2D origem, Ponto2D fim, int tipo){
+		this.origem = origem;
+		this.fim = fim;
+		this.tipo = tipo;		
 	}
 }

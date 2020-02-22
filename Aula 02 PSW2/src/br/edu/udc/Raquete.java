@@ -3,6 +3,9 @@ package br.edu.udc;
 import java.io.Serializable;
 
 public class Raquete implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	float peso;
 	int comprimento;
 	String cor;
@@ -38,7 +41,6 @@ public class Raquete implements Serializable{
 	}
 	
 	public String toString() {
-		return comprimento + "/" + cor;
+		return peso + "/" + comprimento + "/" + cor;
 	}
 }
-

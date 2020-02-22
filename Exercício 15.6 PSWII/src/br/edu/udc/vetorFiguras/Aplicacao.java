@@ -1,6 +1,4 @@
-package br.edu.udc.VetorFiguras;
-
-import br.edu.udc.VetorFiguras.VetorFiguras;
+package br.edu.udc.vetorFiguras;
 
 public class Aplicacao {
 

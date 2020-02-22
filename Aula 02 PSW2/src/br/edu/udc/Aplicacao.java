@@ -1,13 +1,13 @@
 package br.edu.udc;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.Scanner;
 
 public class Aplicacao {
@@ -18,22 +18,22 @@ public class Aplicacao {
 		new Aplicacao();
 	}
 	
-	//input = new Scanner (new File ("e://Clientes.exe"))
-	
 	public Aplicacao() {
 		Raquete raquete = lerRaquete();
 		
 		System.out.println("A sua raquete: " + raquete);
 		
 		FileWriter output = writeTextFile();
+		File arquivoTexto = new File("raquetes.txt");
+		File arquivoSerial = new File("raquetes.serial");
+		
 		try {
 			output.append(raquete.toString());
-			output.append(String.format("Agora vou salvar a raquete diferente: "));
-			output.append(String.format("A raquete : "));
 			output.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		ObjectOutputStream objectOutput = writeObjectFile();
 		
 		try {
@@ -42,6 +42,41 @@ public class Aplicacao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
+		Scanner sc;
+		try {
+			sc = new Scanner(arquivoTexto);
+			String s = sc.next();
+			System.out.println("Printando do arquivo texto: " + s);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		ObjectInputStream objectInput = readObjectFile();
+		
+		try {
+			sc = new Scanner(arquivoSerial);
+			
+			try {
+					Object r;
+					
+					try {
+						r = objectInput.readObject();
+						System.out.println("Printando do arquivo serial: " + r.toString());
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}					
+				
+				objectInput.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		
 		System.out.println("Fim!");
 	}
@@ -67,6 +102,7 @@ public class Aplicacao {
 	//Permite ao usuário abrir o arquivo.
 	public FileWriter writeTextFile() {
 		FileWriter output = null;
+		
 		try {
 			output = new FileWriter("raquetes.txt");
 		} //Fim do try.
@@ -84,6 +120,7 @@ public class Aplicacao {
 			System.exit(1);
 			e.printStackTrace();
 		}
+		
 		return output;
 	}
 	
@@ -96,6 +133,17 @@ public class Aplicacao {
 			e.printStackTrace();
 		}
 		return oos;
+	}
+	
+	public ObjectInputStream readObjectFile() {
+		ObjectInputStream ois = null;
+		
+		try {
+		ois = new ObjectInputStream(new FileInputStream("raquetes.serial"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ois;
 	}
 
 }
