@@ -8,10 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 public class Aplicacao {
-
 	//private FileWriter output; //Objeto utilizado para gerar saída de texto no arquivo.
 	
 	public static void main(String[] args) {
@@ -19,83 +19,82 @@ public class Aplicacao {
 	}
 	
 	public Aplicacao() {
-		Raquete raquete = lerRaquete();
+		Scanner sc = new Scanner (System.in);
+		Raquete raquete = lerRaquete(sc);
 		
 		System.out.println("A sua raquete: " + raquete);
 		
 		FileWriter output = writeTextFile();
-		File arquivoTexto = new File("raquetes.txt");
-		File arquivoSerial = new File("raquetes.serial");
 		
 		try {
-			output.append(raquete.toString());
+			output.append(raquete.toFileString());
+			raquete.setComprimento(raquete.getComprimento()+17);
+			output.append(raquete.toFileString());
 			output.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		ObjectOutputStream objectOutput = writeObjectFile();
+		Scanner in = getReadTextFile("raquetes.txt");
 		
-		try {
-			objectOutput.writeObject(raquete);
-			objectOutput.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String str = in.nextLine();
+		System.out.println(str);
+		Raquete r = Raquete.fromFileString(str);
+		System.out.println(r);
 		
+		str = in.nextLine();
+		System.out.println(str);
+		r = Raquete.fromFileString(str);
+		System.out.println(r);
 		
-		Scanner sc;
-		try {
-			sc = new Scanner(arquivoTexto);
-			String s = sc.next();
-			System.out.println("Printando do arquivo texto: " + s);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+		RandomAccessFile file = getRandomAccessFile();
 		
-		ObjectInputStream objectInput = readObjectFile();
-		
-		try {
-			sc = new Scanner(arquivoSerial);
-			
+		for (int i = 0; i < 5; i++) {
 			try {
-					Object r;
-					
-					try {
-						r = objectInput.readObject();
-						System.out.println("Printando do arquivo serial: " + r.toString());
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-					}					
+				//file.seek(i * Raquete.getSize());
 				
-				objectInput.close();
+				raquete = lerRaquete(sc);
+				
+				raquete.write(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		for (int i = 4; i >= 0; i--) {
+			try {
+				file.seek(i * Raquete.getSize());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			try {
+				raquete.read(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println(raquete);
 		}
-		
-		
+		sc.close();
 		System.out.println("Fim!");
 	}
 	
-	static Raquete lerRaquete() {
+	
+	private Raquete lerRaquete(Scanner sc) {
 		float peso;
 		int comprimento;
 		String cor;
-		Scanner sc = new Scanner(System.in);
 	
 		System.out.printf("Entre com o peso da raquete: ");
 		peso = sc.nextFloat();
 		System.out.printf("Entre com o comprimento da raquete: ");
 		comprimento = sc.nextInt();
+		if (sc.hasNextLine()) sc.hasNextLine();
 		System.out.printf("Entre com a cor da raquete: ");
 		cor = sc.next();
 		
 		Raquete raquete = new Raquete (peso, comprimento, cor);
-		sc.close();
 		return raquete;
 	}
 	
@@ -122,6 +121,35 @@ public class Aplicacao {
 		}
 		
 		return output;
+	}
+	
+	public Scanner getReadTextFile(String fileInput){
+		Scanner input = null;
+		
+		try{
+			input = new Scanner(new File(fileInput));
+			
+		} catch (IOException e) {
+			System.err.println("Error opening file.");
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
+		return input;
+	}
+	
+	public RandomAccessFile getRandomAccessFile() {
+		RandomAccessFile file = null;
+		
+		try{
+			file = new RandomAccessFile("raquetes.dat", "rw");
+		} catch (FileNotFoundException e) {
+			System.err.println("Error opening file.");
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
+		return file;
 	}
 	
 	public ObjectOutputStream writeObjectFile() {
