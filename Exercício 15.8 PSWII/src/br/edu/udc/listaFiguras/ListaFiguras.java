@@ -265,7 +265,7 @@ public class ListaFiguras extends JFrame{
 					mousePanel.setRadiusX(radiusX);
 					mousePanel.setRadiusY(radiusY);
 					
-					//mousePanel.repaint();
+					mousePanel.repaint();
 					
 					int area = (infX - supX) * (infY - supY);
 					
@@ -399,6 +399,7 @@ class Painel extends JPanel {
 	/* Getters and Setters */
 	
 
+	// tratamento de mouse pega os pontos de forma generica para todas as figuras
 	public int getPontoAX() {
 		return pontoAX;
 	}
@@ -526,6 +527,7 @@ class Painel extends JPanel {
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		
+		// insercao he no tratamento de mouse
 		f.inserir(new Figura(), 0);
 		
 		switch(opcao){
