@@ -2,6 +2,8 @@ package br.edu.udc.formas;
 
 import java.awt.Graphics;
 
+import br.edu.udc.formas.manipulador.ManipuladorFormas;
+
 public interface FormaGeometrica {
 	Ponto centro();
 	double area();
@@ -18,5 +20,5 @@ public interface FormaGeometrica {
 	
 	FormaGeometrica clone();
 	
-	void desenhar(Graphics g);
+	public ManipuladorFormas getManipulador();
 }

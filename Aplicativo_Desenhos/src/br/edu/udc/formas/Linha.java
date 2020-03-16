@@ -2,10 +2,14 @@ package br.edu.udc.formas;
 
 import java.awt.Graphics;
 
+import br.edu.udc.formas.manipulador.ManipuladorLinha;
+
 public class Linha implements FormaGeometrica {
 
 	private Ponto a;
 	private Ponto b;
+	
+	private ManipuladorLinha manipulador = null;
 	
 	public Linha(Ponto a, Ponto b) {
 		this.a = a.clone();
@@ -23,6 +27,14 @@ public class Linha implements FormaGeometrica {
 	
 	public void setB(Ponto b) {
 		this.b = b.clone();
+	}
+	
+	public Ponto getA() {
+		return a;
+	}
+	
+	public Ponto getB() {
+		return b;
 	}
 	
 	@Override
@@ -96,10 +108,11 @@ public class Linha implements FormaGeometrica {
 	public FormaGeometrica clone() {
 		return new Linha(this);
 	}
-
-	@Override
-	public void desenhar (Graphics g) {
-		g.drawLine(a.getX(), a.getY(), b.getX(), b.getY());
-	}
 	
+	@Override
+	public ManipuladorLinha getManipulador() {
+		if(manipulador == null)
+			manipulador = new ManipuladorLinha(this);
+		return manipulador; 
+	}
 }

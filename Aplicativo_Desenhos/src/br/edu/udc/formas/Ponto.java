@@ -2,9 +2,13 @@ package br.edu.udc.formas;
 
 import java.awt.Graphics;
 
+import br.edu.udc.formas.manipulador.ManipuladorPonto;
+
 public class Ponto implements FormaGeometrica {
 	private int x;
 	private int y;
+	
+	private ManipuladorPonto manipulador = null;
 	
 	public Ponto(int x, int y) {
 		this.x = x;
@@ -14,6 +18,14 @@ public class Ponto implements FormaGeometrica {
 	public Ponto(Ponto p) {
 		x = p.x;
 		y = p.y;
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
 	}
 	
 	public int getX() {
@@ -83,7 +95,9 @@ public class Ponto implements FormaGeometrica {
 	}
 	
 	@Override
-	public void desenhar (Graphics g) {
-		g.drawOval(x-1, y-1, 2, 2);
+	public ManipuladorPonto getManipulador() {
+		if(manipulador == null)
+			manipulador = new ManipuladorPonto(this);
+		return manipulador; 
 	}
 }
