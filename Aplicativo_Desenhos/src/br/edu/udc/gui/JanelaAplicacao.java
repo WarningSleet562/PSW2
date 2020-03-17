@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import br.edu.udc.formas.Ponto;
+import br.edu.udc.formas.Retangulo;
 import br.edu.udc.formas.Linha;
 import br.edu.udc.formas.Triangulo;
 
@@ -68,6 +69,15 @@ public class JanelaAplicacao extends JFrame {
 			}
 		});
 		mnFiguras.add(mntmTriangulo);
+		
+		JMenuItem mntmRetangulo = new JMenuItem("Retangulo");
+		mntmRetangulo.setMnemonic('R');
+		mntmRetangulo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painel.formaAtual(new Retangulo(new Ponto(-1, -1), new Ponto(-1, -1)));
+			}
+		});
+		mnFiguras.add(mntmRetangulo);
 	}
 
 }
