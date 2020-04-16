@@ -1,11 +1,10 @@
 package br.edu.udc.formas;
 
-import java.awt.Graphics;
-
 import br.edu.udc.formas.manipulador.ManipuladorLinha;
 
 public class Linha implements FormaGeometrica {
 
+	private static final long serialVersionUID = 1L;
 	private Ponto a;
 	private Ponto b;
 	

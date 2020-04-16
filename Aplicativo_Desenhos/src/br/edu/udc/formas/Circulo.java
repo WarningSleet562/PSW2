@@ -1,29 +1,30 @@
 package br.edu.udc.formas;
 
 import br.edu.udc.formas.manipulador.ManipuladorFormas;
-import br.edu.udc.formas.manipulador.ManipuladorRetangulo;
+import br.edu.udc.formas.manipulador.ManipuladorCirculo;
 
-public class Retangulo implements FormaGeometrica {
+public class Circulo implements FormaGeometrica {
 	private static final long serialVersionUID = 1L;
+	
 	private Ponto a;
 	private Ponto b;
+
+	private ManipuladorCirculo manipulador = null;
 	
-	private ManipuladorRetangulo manipulador = null;
+	public Circulo(Circulo c) {
+		this.a = c.a.clone();
+		this.b = c.b.clone();
+	}
 	
-	public Retangulo(Ponto a, Ponto b) {
+	public Circulo(Ponto a, Ponto b) {
 		this.a = a.clone();
 		this.b = b.clone();
 	}
-	
-	public Retangulo(Retangulo r) {
-		this.a = r.a.clone();
-		this.b = r.b.clone();
-	}
-	
+
 	public void setA(Ponto a) {
-		this.a = a.clone();
+		this.a = a;
 	}
-	
+
 	public void setB(Ponto b) {
 		this.b = b;
 	}
@@ -35,10 +36,11 @@ public class Retangulo implements FormaGeometrica {
 	public Ponto getB() {
 		return b;
 	}
-	
+
 	@Override
 	public Ponto centro() {
-		return new Ponto((a.getX() + b.getX()) / 2, (a.getY() + b.getY()) / 2);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -66,19 +68,15 @@ public class Retangulo implements FormaGeometrica {
 	}
 
 	@Override
-	public double distancia(FormaGeometrica p) {
+	public double distancia(FormaGeometrica f) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public String toString() {
-		return String.format("A: [%d, %d] / B: [%d, %d]", a.getX(), a.getY(), b.getX(), b.getY());
-	}
-	
-	@Override
 	public String getNome() {
-		return "Retângulo";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -95,13 +93,13 @@ public class Retangulo implements FormaGeometrica {
 
 	@Override
 	public FormaGeometrica clone() {
-		return new Retangulo(this);
+		return new Circulo(this);
 	}
 
 	@Override
 	public ManipuladorFormas getManipulador() {
-		if(manipulador == null)
-			manipulador = new ManipuladorRetangulo(this);
+		if (manipulador == null)
+			manipulador = new ManipuladorCirculo(this);
 		return manipulador;
 	}
 

@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 
 import br.edu.udc.formas.Ponto;
 import br.edu.udc.formas.Retangulo;
+import br.edu.udc.formas.Circulo;
 import br.edu.udc.formas.Linha;
 import br.edu.udc.formas.Triangulo;
 
@@ -80,6 +81,15 @@ public class JanelaAplicacao extends JFrame {
 			}
 		});
 		mnFiguras.add(mntmRetangulo);
+		
+		JMenuItem mntmCirculo = new JMenuItem("Circulo");
+		mntmCirculo.setMnemonic('C');
+		mntmCirculo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painel.formaAtual(new Circulo(new Ponto(-1, -1), new Ponto(-1, -1)));
+			}
+		});
+		mnFiguras.add(mntmCirculo);
 		
 		JMenuItem mntmSalvar = new JMenuItem("Salvar");
 		mntmSalvar.setMnemonic('S');

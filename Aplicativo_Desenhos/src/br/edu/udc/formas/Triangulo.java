@@ -1,11 +1,9 @@
 package br.edu.udc.formas;
 
-import java.awt.Graphics;
-
 import br.edu.udc.formas.manipulador.ManipuladorTriangulo;
 
 public class Triangulo implements FormaGeometrica {
-
+	private static final long serialVersionUID = 1L;
 	private Ponto a;
 	private Ponto b;
 	private Ponto c;

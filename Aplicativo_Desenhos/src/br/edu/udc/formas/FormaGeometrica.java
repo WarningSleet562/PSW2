@@ -1,6 +1,5 @@
 package br.edu.udc.formas;
 
-import java.awt.Graphics;
 import java.io.Serializable;
 
 import br.edu.udc.formas.manipulador.ManipuladorFormas;

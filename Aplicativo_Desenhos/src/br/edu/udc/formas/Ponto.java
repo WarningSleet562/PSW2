@@ -1,10 +1,9 @@
 package br.edu.udc.formas;
 
-import java.awt.Graphics;
-
 import br.edu.udc.formas.manipulador.ManipuladorPonto;
 
 public class Ponto implements FormaGeometrica {
+	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
 	
