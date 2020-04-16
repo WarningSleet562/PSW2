@@ -18,17 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import br.edu.udc.formas.FormaGeometrica;
-import br.edu.udc.formas.Linha;
-import br.edu.udc.formas.Ponto;
-import br.edu.udc.formas.Triangulo;
 
 public class PainelDesenho extends JPanel implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 	private JLabel status;
 	
 	private FormaGeometrica formaAtual;
-	
-	private int estado;
 	
 	private List<FormaGeometrica> listaFormas;
 	
@@ -43,7 +38,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 	
 	public void formaAtual (FormaGeometrica forma) {
 		formaAtual = forma;
-		estado = 0;
 	}
 	
 	@Override
