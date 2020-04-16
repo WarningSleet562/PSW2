@@ -1,11 +1,10 @@
 package br.edu.udc.formas;
 
 import java.awt.Graphics;
-import java.io.Serializable;
 
 import br.edu.udc.formas.manipulador.ManipuladorFormas;
 
-public interface FormaGeometrica extends Serializable{
+public interface FormaGeometrica {
 	Ponto centro();
 	double area();
 	double perimetro();

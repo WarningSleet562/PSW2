@@ -3,9 +3,7 @@ package br.edu.udc.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -80,36 +78,6 @@ public class JanelaAplicacao extends JFrame {
 			}
 		});
 		mnFiguras.add(mntmRetangulo);
-		
-		JMenuItem mntmSalvar = new JMenuItem("Salvar");
-		mntmSalvar.setMnemonic('S');
-		mntmSalvar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fc = new JFileChooser();
-				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-					File f = fc.getSelectedFile();
-					painel.salvar(f);
-				}
-			}
-		});
-		mnArquivo.add(mntmSalvar);
-		
-		JMenuItem mntmLer = new JMenuItem("Ler");
-		mntmLer.setMnemonic('L');
-		mntmLer.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fc = new JFileChooser();
-				if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					File f = fc.getSelectedFile();
-					painel.ler(f);
-				}
-			}
-		});
-		mnArquivo.add(mntmLer);
 	}
 
 }
