@@ -9,7 +9,7 @@ public class Circulo implements FormaGeometrica {
 	private Ponto a;
 	private Ponto b;
 
-	private ManipuladorCirculo manipulador = null;
+	private transient ManipuladorCirculo manipulador = null;
 	
 	public Circulo(Circulo c) {
 		this.a = c.a.clone();
@@ -75,8 +75,7 @@ public class Circulo implements FormaGeometrica {
 
 	@Override
 	public String getNome() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Circulo";
 	}
 
 	@Override

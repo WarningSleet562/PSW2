@@ -8,7 +8,7 @@ public class Triangulo implements FormaGeometrica {
 	private Ponto b;
 	private Ponto c;
 	
-	private ManipuladorTriangulo manipulador = null;
+	private transient ManipuladorTriangulo manipulador = null;
 	
 	public Triangulo(Ponto a, Ponto b, Ponto c) {
 		this.a = a.clone();

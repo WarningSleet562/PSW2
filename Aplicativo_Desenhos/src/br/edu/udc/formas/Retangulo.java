@@ -8,7 +8,7 @@ public class Retangulo implements FormaGeometrica {
 	private Ponto a;
 	private Ponto b;
 	
-	private ManipuladorRetangulo manipulador = null;
+	private transient ManipuladorRetangulo manipulador = null;
 	
 	public Retangulo(Ponto a, Ponto b) {
 		this.a = a.clone();

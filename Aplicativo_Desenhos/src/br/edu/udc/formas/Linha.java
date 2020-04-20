@@ -8,7 +8,7 @@ public class Linha implements FormaGeometrica {
 	private Ponto a;
 	private Ponto b;
 	
-	private ManipuladorLinha manipulador = null;
+	private transient ManipuladorLinha manipulador = null;
 	
 	public Linha(Ponto a, Ponto b) {
 		this.a = a.clone();

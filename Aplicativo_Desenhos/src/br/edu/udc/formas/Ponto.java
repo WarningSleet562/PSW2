@@ -7,7 +7,7 @@ public class Ponto implements FormaGeometrica {
 	private int x;
 	private int y;
 	
-	private ManipuladorPonto manipulador = null;
+	private transient ManipuladorPonto manipulador = null;
 	
 	public Ponto(int x, int y) {
 		this.x = x;

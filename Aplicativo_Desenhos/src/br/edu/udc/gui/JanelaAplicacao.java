@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 
 import br.edu.udc.formas.Ponto;
 import br.edu.udc.formas.Retangulo;
+import br.edu.udc.AplicacaoDesenho;
 import br.edu.udc.formas.Circulo;
 import br.edu.udc.formas.Linha;
 import br.edu.udc.formas.Triangulo;
@@ -100,7 +101,7 @@ public class JanelaAplicacao extends JFrame {
 				JFileChooser fc = new JFileChooser();
 				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 					File f = fc.getSelectedFile();
-					painel.salvar(f);
+					AplicacaoDesenho.getAplicacao().getDocumento().salvar(f);
 				}
 			}
 		});
@@ -115,11 +116,41 @@ public class JanelaAplicacao extends JFrame {
 				JFileChooser fc = new JFileChooser();
 				if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					File f = fc.getSelectedFile();
-					painel.ler(f);
+					AplicacaoDesenho.getAplicacao().getDocumento().ler(f);
 				}
 			}
 		});
 		mnArquivo.add(mntmLer);
+		
+		JMenuItem mntmSalvarTxt = new JMenuItem("Salvar Texto");
+		mntmSalvarTxt.setMnemonic('X');
+		mntmSalvarTxt.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+					File f = fc.getSelectedFile();
+					AplicacaoDesenho.getAplicacao().getDocumento().salvarTxt(f);
+				}
+			}
+		});
+		mnArquivo.add(mntmSalvarTxt);
+		
+		JMenuItem mntmLerTxt = new JMenuItem("Ler Texto");
+		mntmLerTxt.setMnemonic('T');
+		mntmLerTxt.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					File f = fc.getSelectedFile();
+					AplicacaoDesenho.getAplicacao().getDocumento().lerTxt(f);
+				}
+			}
+		});
+		mnArquivo.add(mntmLerTxt);
 	}
 
 }
