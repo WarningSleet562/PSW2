@@ -45,10 +45,10 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		String message = String.format("Mouse arrastado em [%d; %d]", e.getX(), e.getY());
-		if (formaAtual != null)
-			message = message + " - desenhando " + formaAtual.getNome() + " em " + formaAtual;
-		status.setText(message);		
+		if (formaAtual != null){
+			formaAtual.getManipulador().arrastar(e.getX(), e.getY());
+			repaint();
+		}
 	}
 
 	@Override
@@ -96,16 +96,21 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 	@Override
 	public void mousePressed(MouseEvent e) {
 		String message = String.format("Botão pressionado em [%d; %d]", e.getX(), e.getY());
-		if (formaAtual != null)
-			message = message + " - desenhando " + formaAtual.getNome() + " em" + formaAtual;
-		status.setText(message);		
+		if (formaAtual != null){
+			formaAtual.getManipulador().apertar(e.getX(), e.getY());
+			repaint();
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		String message = String.format("Botão solto em [%d; %d]", e.getX(), e.getY());
-		if (formaAtual != null)
-			message = message + " - desenhando " + formaAtual.getNome() + " em" + formaAtual;
-		status.setText(message);		
+		if (formaAtual != null) {
+			if(formaAtual.getManipulador().soltar(e.getX(), e.getY())) {
+			AplicacaoDesenho.getAplicacao().getDocumento().novaForma(formaAtual);
+			formaAtual = formaAtual.clone();
+			}
+		}
 	}
 }
+

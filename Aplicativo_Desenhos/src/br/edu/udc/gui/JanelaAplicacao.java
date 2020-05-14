@@ -16,6 +16,7 @@ import br.edu.udc.formas.Ponto;
 import br.edu.udc.formas.Retangulo;
 import br.edu.udc.AplicacaoDesenho;
 import br.edu.udc.formas.Circulo;
+import br.edu.udc.formas.Lapis;
 import br.edu.udc.formas.Linha;
 import br.edu.udc.formas.Triangulo;
 
@@ -91,6 +92,15 @@ public class JanelaAplicacao extends JFrame {
 			}
 		});
 		mnFiguras.add(mntmCirculo);
+		
+		JMenuItem mntmLapis = new JMenuItem("Lapis");
+		mntmLapis.setMnemonic('L');
+		mntmLapis.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painel.formaAtual(new Lapis());
+			}
+		});
+		mnFiguras.add(mntmLapis);
 		
 		JMenuItem mntmSalvar = new JMenuItem("Salvar");
 		mntmSalvar.setMnemonic('S');
