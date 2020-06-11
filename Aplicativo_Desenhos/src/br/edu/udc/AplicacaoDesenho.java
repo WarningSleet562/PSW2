@@ -8,18 +8,26 @@ public class AplicacaoDesenho {
 	private Documento documento;
 
 	private AplicacaoDesenho(){
-		documento = new Documento();
+		
+	}
+	
+	private void iniAplicacaoDesenho() {
 		JanelaAplicacao janela = new JanelaAplicacao();
+		janela.iniJanelaAplicacao();
 		janela.setVisible(true);
 	}
 	
 	public static AplicacaoDesenho getAplicacao() {
-		if(aplicacao == null)
+		if(aplicacao == null) {
 			aplicacao = new AplicacaoDesenho();
+			aplicacao.iniAplicacaoDesenho();
+		}
 		return aplicacao;
 	}
 	
 	public Documento getDocumento() {
+		if (documento == null)
+			documento = new Documento();
 		return documento;
 	}
 	

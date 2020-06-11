@@ -3,18 +3,23 @@ package br.edu.udc.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 
 import br.edu.udc.formas.Ponto;
 import br.edu.udc.formas.Retangulo;
 import br.edu.udc.AplicacaoDesenho;
+import br.edu.udc.Documento;
 import br.edu.udc.formas.Circulo;
 import br.edu.udc.formas.Lapis;
 import br.edu.udc.formas.Linha;
@@ -23,18 +28,32 @@ import br.edu.udc.formas.Triangulo;
 public class JanelaAplicacao extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	public JanelaAplicacao() {
-		super("Desenhos com o mouse");
-		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(700, 700);
-		this.setLayout(new BorderLayout());
+	private PainelDesenho painelDesenho;
+	private PainelTexto painelTexto;
 	
-		JLabel status = new JLabel("Mensagens de evento do mouse");
-		this.add(status, BorderLayout.SOUTH);
+	private ButtonGroup buttonGroup = new ButtonGroup();
+	
+	public JanelaAplicacao() {
+		super("Aplicação de desenho com o mouse");
+	}
+	
+	public void iniJanelaAplicacao() {
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(800, 600);
 		
-		PainelDesenho painel = new PainelDesenho(status);
-		this.add(painel, BorderLayout.CENTER);
+		getContentPane().setLayout(new BorderLayout());
+	
+		JLabel status = new JLabel("Status da aplicação");
+		getContentPane().add(status, BorderLayout.SOUTH);
+		
+		painelDesenho = new PainelDesenho(status);
+		getContentPane().add(painelDesenho, BorderLayout.CENTER);
+		
+		painelTexto = new PainelTexto(status);
+		
+		Documento doc = AplicacaoDesenho.getAplicacao().getDocumento();
+		doc.adicionarPainel(painelDesenho);
+		doc.adicionarPainel(painelTexto);
 		
 		// Criar Menu
 		JMenuBar menuBar = new JMenuBar();
@@ -48,11 +67,44 @@ public class JanelaAplicacao extends JFrame {
 		mnFiguras.setMnemonic('F');
 		menuBar.add(mnFiguras);
 		
+		JMenu mnVisualizar = new JMenu("Visualizar");
+		mnFiguras.setMnemonic('V');
+		menuBar.add(mnVisualizar);
+		
+		JRadioButtonMenuItem rdbtnmntmDesenho = new JRadioButtonMenuItem("Desenho");
+		rdbtnmntmDesenho.setSelected(true);
+		rdbtnmntmDesenho.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					getContentPane().remove(painelTexto);
+					getContentPane().add(painelDesenho, BorderLayout.CENTER);
+					getContentPane().revalidate();
+					getContentPane().repaint();
+				}
+			}
+		});
+		buttonGroup.add(rdbtnmntmDesenho);
+		mnVisualizar.add(rdbtnmntmDesenho);
+		
+		JRadioButtonMenuItem rdbtnmntmTexto = new JRadioButtonMenuItem("Texto");
+		rdbtnmntmTexto.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					getContentPane().remove(painelDesenho);
+					getContentPane().add(painelTexto, BorderLayout.CENTER);
+					getContentPane().revalidate();
+					getContentPane().repaint();
+				}
+			}
+		});
+		buttonGroup.add(rdbtnmntmTexto);
+		mnVisualizar.add(rdbtnmntmTexto);
+		
 		JMenuItem mntmPonto = new JMenuItem("Ponto");
 		mntmPonto.setMnemonic('P');
 		mntmPonto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painel.formaAtual(new Ponto(-1, -1));
+				painelDesenho.novaFormaGeometrica(new Ponto(-1, -1));
 			}
 		});
 		mnFiguras.add(mntmPonto);
@@ -61,7 +113,7 @@ public class JanelaAplicacao extends JFrame {
 		mntmLinha.setMnemonic('L');
 		mntmLinha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painel.formaAtual(new Linha(new Ponto(-1, -1), new Ponto(-1, -1)));
+				painelDesenho.novaFormaGeometrica(new Linha(new Ponto(-1, -1), new Ponto(-1, -1)));
 			}
 		});
 		mnFiguras.add(mntmLinha);
@@ -70,7 +122,7 @@ public class JanelaAplicacao extends JFrame {
 		mntmTriangulo.setMnemonic('T');
 		mntmTriangulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painel.formaAtual(new Triangulo(new Ponto(-1, -1), new Ponto(-1, -1), new Ponto(-1, -1)));
+				painelDesenho.novaFormaGeometrica(new Triangulo(new Ponto(-1, -1), new Ponto(-1, -1), new Ponto(-1, -1)));
 			}
 		});
 		mnFiguras.add(mntmTriangulo);
@@ -79,7 +131,7 @@ public class JanelaAplicacao extends JFrame {
 		mntmRetangulo.setMnemonic('R');
 		mntmRetangulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painel.formaAtual(new Retangulo(new Ponto(-1, -1), new Ponto(-1, -1)));
+				painelDesenho.novaFormaGeometrica(new Retangulo(new Ponto(-1, -1), new Ponto(-1, -1)));
 			}
 		});
 		mnFiguras.add(mntmRetangulo);
@@ -88,7 +140,7 @@ public class JanelaAplicacao extends JFrame {
 		mntmCirculo.setMnemonic('C');
 		mntmCirculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painel.formaAtual(new Circulo(new Ponto(-1, -1), new Ponto(-1, -1)));
+				painelDesenho.novaFormaGeometrica(new Circulo(new Ponto(-1, -1), new Ponto(-1, -1)));
 			}
 		});
 		mnFiguras.add(mntmCirculo);
@@ -97,7 +149,7 @@ public class JanelaAplicacao extends JFrame {
 		mntmLapis.setMnemonic('L');
 		mntmLapis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painel.formaAtual(new Lapis());
+				painelDesenho.novaFormaGeometrica(new Lapis());
 			}
 		});
 		mnFiguras.add(mntmLapis);

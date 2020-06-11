@@ -12,7 +12,7 @@ import java.util.Iterator;
 import br.edu.udc.AplicacaoDesenho;
 import br.edu.udc.formas.FormaGeometrica;
 
-public class PainelDesenho extends JPanel implements MouseListener, MouseMotionListener {
+public class PainelDesenho extends JPanel implements PainelFormaGeometrica, MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 	private JLabel status;
 	
@@ -24,10 +24,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 		this.addMouseMotionListener(this);
 		
 		formaAtual = null;
-	}
-	
-	public void formaAtual (FormaGeometrica forma) {
-		formaAtual = forma;
 	}
 	
 	@Override
@@ -111,6 +107,15 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 			formaAtual = formaAtual.clone();
 			}
 		}
+	}
+
+	@Override
+	public void atualizar() {
+		repaint();
+	}
+	
+	public void novaFormaGeometrica(FormaGeometrica forma) {
+		formaAtual = forma;
 	}
 }
 

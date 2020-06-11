@@ -17,29 +17,35 @@ import java.util.Scanner;
 import br.edu.udc.formas.FabricaFormas;
 import br.edu.udc.formas.FormaGeometrica;
 import br.edu.udc.gui.PainelDesenho;
+import br.edu.udc.gui.PainelFormaGeometrica;
+import br.edu.udc.gui.PainelTexto;
 
 public class Documento {
 
 	private List<FormaGeometrica> listaFormas;
-	private PainelDesenho painel;
+	private List<PainelFormaGeometrica> listaOuvintes;
 	
 	public Documento() {
-		painel = null;
 		listaFormas = new LinkedList<FormaGeometrica>();
+		listaOuvintes = new LinkedList<PainelFormaGeometrica>();
 	}
 	
-	public void setPainel(PainelDesenho painel) {
-		this.painel = painel;
+	public void adicionarPainel(PainelFormaGeometrica painel) {
+		listaOuvintes.add(painel);
+	}
+	
+	public void removePainel(PainelFormaGeometrica painel) {
+		listaOuvintes.remove(painel);
 	}
 	
 	public void novaForma(FormaGeometrica forma) {
 		listaFormas.add(forma);
-		atualizarPainel();
+		atualizarPaineis();
 	}
 	
-	public void atualizarPainel() {
-		if(painel != null)
-			painel.repaint();
+	public void atualizarPaineis() {
+		for (PainelFormaGeometrica painel : listaOuvintes)
+			painel.atualizar();
 	}
 	
 	public Iterator<FormaGeometrica> getIterador() {
@@ -84,7 +90,7 @@ public class Documento {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		atualizarPainel();
+		atualizarPaineis();
 	}
 
 	public void salvarTxt(File file) {
@@ -118,6 +124,6 @@ public class Documento {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		atualizarPainel();
+		atualizarPaineis();
 	}
 }
