@@ -16,9 +16,7 @@ import java.util.Scanner;
 
 import br.edu.udc.formas.FabricaFormas;
 import br.edu.udc.formas.FormaGeometrica;
-import br.edu.udc.gui.PainelDesenho;
 import br.edu.udc.gui.PainelFormaGeometrica;
-import br.edu.udc.gui.PainelTexto;
 
 public class Documento {
 
@@ -32,6 +30,7 @@ public class Documento {
 	
 	public void adicionarPainel(PainelFormaGeometrica painel) {
 		listaOuvintes.add(painel);
+		atualizarPaineis();
 	}
 	
 	public void removePainel(PainelFormaGeometrica painel) {

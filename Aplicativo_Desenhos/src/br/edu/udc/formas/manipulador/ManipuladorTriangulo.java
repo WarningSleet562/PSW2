@@ -40,6 +40,8 @@ public class ManipuladorTriangulo implements ManipuladorFormas {
 		case 2:
 			triangulo.setC(new Ponto(x, y));
 			break;
+		default:
+			break;
 		}
 		
 	}
@@ -61,8 +63,11 @@ public class ManipuladorTriangulo implements ManipuladorFormas {
 		case 2:
 			triangulo.setC(new Ponto(x, y));
 			estado = 0;
+			return true;
+		default:
+			break;
 		}
-		return true;
+		return false;
 	}
 
 	@Override

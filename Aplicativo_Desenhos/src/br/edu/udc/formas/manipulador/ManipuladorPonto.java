@@ -6,7 +6,7 @@ import br.edu.udc.formas.Ponto;
 
 public class ManipuladorPonto implements ManipuladorFormas {
 
-	Ponto ponto;
+	private Ponto ponto;
 	
 	public ManipuladorPonto(Ponto p) {
 		ponto = p;
@@ -14,7 +14,7 @@ public class ManipuladorPonto implements ManipuladorFormas {
 	
 	@Override
 	public void desenhar (Graphics g) {
-		g.drawOval(ponto.getX(), ponto.getY(), 3, 3);
+		g.drawOval(ponto.getX(), ponto.getY(), 2, 2);
 	}
 
 	@Override

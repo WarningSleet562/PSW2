@@ -72,35 +72,22 @@ public class Linha implements FormaGeometrica {
 		return Math.sqrt(dx*dx + dy*dy);
 	}
 
-	@Override
 	public String toString() {
-		return String.format("A: [%d, %d] / B: [%d, %d]", a.getX(), a.getY(), b.getX(), b.getY());
+		return String.format("[%s%s]", this.a,this.b);
 	}
 	
 	public String getNome() {
-		return "Linha";
+		return String.format("Linha");
 	}
 	
 	@Override
 	public Ponto getEnd() {
-		return new Ponto(a.getX() > b.getX() ? a.getX() : b.getX(),
-						 a.getY() > b.getY() ? b.getY() : b.getY());
+		return new Ponto(a.getX() > b.getX() ? a.getX() : b.getX(), a.getY() > b.getY()? a.getY() : b.getY());
 	}
 
 	@Override
 	public Ponto getStart() {
-		int x;
-		int y;
-		if(a.getX() < b.getX())
-			x = a.getX();
-		else 
-			x = b.getX();
-		if(a.getY() < b.getY())
-			y = a.getY();
-		else
-			y = b.getY();
-		
-		return new Ponto(x,y);
+		return new Ponto(a.getX()<b.getX() ? a.getX() : b.getX(), a.getY() < b.getY()? a.getY() : b.getY());
 	}
 
 	@Override

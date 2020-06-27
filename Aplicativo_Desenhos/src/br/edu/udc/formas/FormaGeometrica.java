@@ -10,7 +10,7 @@ public interface FormaGeometrica extends Serializable{
 	double perimetro();
 	double base();
 	double altura();
-	double distancia(FormaGeometrica p);
+	double distancia(FormaGeometrica f);
 	
 	String toString();
 	String getNome();

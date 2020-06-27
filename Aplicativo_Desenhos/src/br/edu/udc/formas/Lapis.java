@@ -9,10 +9,14 @@ public class Lapis implements FormaGeometrica{
 	private static final long serialVersionUID = 1L;
 	private List<Ponto> pontos;
 	
-	private transient ManipuladorLapis manipulador = null;
+	private transient ManipuladorLapis manipulador;
 	
 	public Lapis() {
 		pontos = new LinkedList<Ponto>();
+	}
+	
+	public Lapis(LinkedList<Ponto> pontos) {
+		pontos = new LinkedList<Ponto>(pontos);
 	}
 	
 	public int getTam() {
@@ -72,7 +76,7 @@ public class Lapis implements FormaGeometrica{
 
 	@Override
 	public String getNome() {
-		return "Lapis";
+		return String.format("Lápis");
 	}
 
 	@Override

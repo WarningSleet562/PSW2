@@ -9,14 +9,19 @@ public class Ponto implements FormaGeometrica {
 	
 	private transient ManipuladorPonto manipulador = null;
 	
+	public Ponto() {
+		this.x = 0;
+		this.y = 0;
+	}
+	
 	public Ponto(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 	
 	public Ponto(Ponto p) {
-		x = p.x;
-		y = p.y;
+		this.x = p.x;
+		this.y = p.y;
 	}
 	
 	public void setX(int x) {
@@ -71,11 +76,11 @@ public class Ponto implements FormaGeometrica {
 
 	@Override
 	public String toString() {
-		return String.format("(%d; %d)", x, y);
+		return String.format("(%s; %s)", this.x,this.y);
 	}
 	
 	public String getNome() {
-		return "Ponto";
+		return String.format("Ponto");
 	}
 	
 	@Override

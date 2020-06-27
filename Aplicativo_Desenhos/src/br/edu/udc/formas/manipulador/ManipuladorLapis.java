@@ -8,10 +8,11 @@ import br.edu.udc.formas.Ponto;
 public class ManipuladorLapis implements ManipuladorFormas{
 
 	private Lapis lapis;
+	@SuppressWarnings("unused")
 	private int estado;
 	
-	public ManipuladorLapis(Lapis lapis) {
-		this.lapis = lapis;
+	public ManipuladorLapis(Lapis l) {
+		lapis = l;
 		estado = 0;
 	}
 	
@@ -20,7 +21,7 @@ public class ManipuladorLapis implements ManipuladorFormas{
 		if(lapis.getTam() < 2)
 			return;
 		Ponto a = lapis.getPosicao(0);
-		for(int i = 1; i < lapis.getTam(); i++) {
+		for(int i = 0; i < lapis.getTam(); i++) {
 			Ponto b = lapis.getPosicao(i);
 			g.drawLine(a.getX(), a.getY(), b.getX(), b.getY());
 			a = b;

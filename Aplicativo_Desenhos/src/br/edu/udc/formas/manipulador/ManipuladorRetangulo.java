@@ -49,7 +49,7 @@ public class ManipuladorRetangulo implements ManipuladorFormas {
 			return false;
 		case 1:
 			retangulo.setB(new Ponto(x, y));
-			estado = 0;
+			estado = 2;
 			return true;
 		}
 		return false;

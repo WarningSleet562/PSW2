@@ -11,15 +11,15 @@ public class Triangulo implements FormaGeometrica {
 	private transient ManipuladorTriangulo manipulador = null;
 	
 	public Triangulo(Ponto a, Ponto b, Ponto c) {
-		this.a = a.clone();
-		this.b = b.clone();
-		this.c = c.clone();
+		this.a = new Ponto(a);
+		this.b = new Ponto(b);
+		this.c = new Ponto(c);
 	}
 	
 	public Triangulo(Triangulo t) {
-		this.a = t.a.clone();
-		this.b = t.b.clone();
-		this.c = t.c.clone();
+		a = new Ponto(t.a);
+		b = new Ponto(t.b);
+		c = new Ponto(t.c);
 	}
 	
 	public void setA(Ponto a) {
@@ -64,8 +64,7 @@ public class Triangulo implements FormaGeometrica {
 
 	@Override
 	public double base() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (a.distancia(b));
 	}
 
 	@Override
@@ -85,25 +84,25 @@ public class Triangulo implements FormaGeometrica {
 		return Math.sqrt(dx*dx + dy*dy);
 	}
 
-	@Override
 	public String toString() {
-		return String.format("A: [%d, %d] / B: [%d, %d] / C: [%d, %d]", a.getX(), a.getY(), b.getX(), b.getY(), c.getX(), c.getY());
+		return String.format("[%s%s%s]", this.a, this.b, this.c);
 	}
 	
 	public String getNome() {
-		return "Triângulo";
+		return String.format("Triangulo");
 	}
 	
 	@Override
 	public Ponto getEnd() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Ponto(a.getX() > b.getX() ? (a.getX() > c.getX() ? a.getX() : (b.getX() > c.getX() ? b.getX() : c.getX())) : b.getX() > c.getX() ? b.getX() : c.getX(),
+				         a.getY() > b.getY() ? (a.getY() > c.getY() ? a.getY() : (b.getY() > c.getY() ? b.getY() : c.getY())) : b.getY() > c.getY() ? b.getY() : c.getY());
+
 	}
 
 	@Override
 	public Ponto getStart() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Ponto(a.getX() < b.getX() ? (a.getX() < c.getX() ? a.getX() : (b.getX() < c.getX() ? b.getX() : c.getX())) : b.getX() < c.getX() ? b.getX() : c.getX(),
+						 a.getY() < b.getY() ? (a.getY() < c.getY() ? a.getY() : (b.getY() < c.getY() ? b.getY() : c.getY())) : b.getY() < c.getY() ? b.getY() : c.getY());				
 	}
 
 	@Override

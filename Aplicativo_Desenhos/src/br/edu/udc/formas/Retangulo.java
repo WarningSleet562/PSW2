@@ -21,7 +21,7 @@ public class Retangulo implements FormaGeometrica {
 	}
 	
 	public void setA(Ponto a) {
-		this.a = a.clone();
+		this.a = a;
 	}
 	
 	public void setB(Ponto b) {
@@ -43,54 +43,51 @@ public class Retangulo implements FormaGeometrica {
 
 	@Override
 	public double area() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (base() * altura());
 	}
 
 	@Override
 	public double perimetro() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((altura() * 2) + (base() * 2));
 	}
 
 	@Override
 	public double base() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Math.sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()));
 	}
 
 	@Override
 	public double altura() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Math.sqrt((a.getY() - b.getY()) * (a.getY() - b.getY()));
 	}
 
 	@Override
-	public double distancia(FormaGeometrica p) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double distancia(FormaGeometrica f) {
+		Ponto cf = f.centro();
+		Ponto cl = centro();
+		int dx = cl.getX() - cf.getX();
+		int dy = cl.getY() - cf.getY();
+
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 
-	@Override
 	public String toString() {
-		return String.format("A: [%d, %d] / B: [%d, %d]", a.getX(), a.getY(), b.getX(), b.getY());
+		return String.format("[%s%s%s%s]", a, new Ponto(b.getX(), a.getY()), b, new Ponto(a.getX(), b.getY()));
 	}
 	
 	@Override
 	public String getNome() {
-		return "Retângulo";
+		return String.format("Retangulo");
 	}
 
 	@Override
 	public Ponto getEnd() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Ponto(a.getX() > b.getX() ? a.getX() : b.getX(), a.getY() > b.getY() ? a.getY() : b.getY());
 	}
 
 	@Override
 	public Ponto getStart() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Ponto(a.getX() < b.getX() ? a.getX() : b.getX(), a.getY() < b.getY() ? a.getY() : b.getY());
 	}
 
 	@Override

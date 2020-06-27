@@ -9,10 +9,11 @@ public class ManipuladorLinha implements ManipuladorFormas {
 
 	private Linha linha;
 	
-	private int estado;
+	private int estado = 0;
 	
 	public ManipuladorLinha(Linha l) {
 		linha = l;
+		estado = 0;
 	}
 	
 	@Override
@@ -45,8 +46,11 @@ public class ManipuladorLinha implements ManipuladorFormas {
 		case 1:
 			linha.setB(new Ponto(x, y));
 			estado = 0;
+			return true;
+		default:
+			break;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
